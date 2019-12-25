@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="eShopXamForms.Views.LoginView"
+             xmlns:viewModelBase="clr-namespace:eShopXamForms.ViewModels.Base;assembly=eShopXamForms"
+             viewModelBase:ViewModelLocator.AutoWireViewModel="True">
+    <ContentPage.Title>
+        <OnPlatform x:TypeArguments="x:String">
+            <On Platform="iOS" Value="eShop Xam"/>
+            <On Platform="Android" Value="eShop"/>
+        </OnPlatform>
+    </ContentPage.Title>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="TitleLabelStyle"
+                   TargetType="{x:Type Label}">
+                <Setter Property="FontFamily"
+                    Value="{StaticResource MontserratRegular}" />
+                <Setter Property="FontAttributes"
+                    Value="Bold" />
+                <Setter Property="FontSize"
+                    Value="{StaticResource MediumSize}" />
+                <Setter Property="HorizontalOptions"
+                    Value="Center" />
+                <Setter Property="Margin"
+                    Value="0, 12" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid
+        BackgroundColor="{StaticResource BackgroundColor}">
+        <Grid
+            x:Name="LoginPanel"
+            IsVisible="{Binding IsMock}"
+            Padding="0"
+            ColumnSpacing="0"
+            RowSpacing="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="60"/>
+            </Grid.RowDefinitions>
+            <!-- LOGIN / REGISTER / SETTINGS -->
+            <Grid   
+                Grid.Row="0"
+                Margin="48, 24">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <StackLayout  
+                  Grid.Column="0"
+                  Orientation="Horizontal"
+                  HorizontalOptions="Center">
+                    <Label     
+                        Text="["
+                        TextColor="{StaticResource LightGreenColor}"/>
+                    <Label
+                        Text="LOGIN"
+                        FontAttributes="Bold"/>
+                    <Label
+                        Text="]"
+                        TextColor="{StaticResource LightGreenColor}"/>
+                </StackLayout>
+                <Grid
+                  Grid.Column="1"
+                  HorizontalOptions="Center">
+                    <Label
+                        Text="REGISTER"
+                        TextColor="Gray"/>
+                </Grid>
+                <StackLayout  
+                  Grid.Column="2"
+                  Orientation="Horizontal"
+                  HorizontalOptions="Center">
+                    <Label
+                        Text="SETTINGS"/>
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding SettingsCommand}"
+                            NumberOfTapsRequired="1" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </Grid>
+            <!-- INFO -->
+            <Label
+              Grid.Row="1"
+              Text="ARE YOU REGISTERED?"
+              Style="{StaticResource TitleLabelStyle}"/>
+        </Grid>
+
+    </Grid>
+</ContentPage>
