@@ -3,6 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="eShopXamForms.Views.LoginView"
              xmlns:viewModelBase="clr-namespace:eShopXamForms.ViewModels.Base;assembly=eShopXamForms"
+             xmlns:converters="clr-namespace:eShopXamForms.Converters;assembly=eShopXamForms"
+             xmlns:behaviors="clr-namespace:eShopXamForms.Behaviors;assembly=eShopXamForms"
              viewModelBase:ViewModelLocator.AutoWireViewModel="True">
     <ContentPage.Title>
         <OnPlatform x:TypeArguments="x:String">
@@ -12,6 +14,8 @@
     </ContentPage.Title>
     <ContentPage.Resources>
         <ResourceDictionary>
+            <converters:FirstValidationErrorConverter x:Key="FirstValidationErrorConverter"/>
+
             <Style x:Key="TitleLabelStyle"
                    TargetType="{x:Type Label}">
                 <Setter Property="FontFamily"
@@ -24,6 +28,18 @@
                     Value="Center" />
                 <Setter Property="Margin"
                     Value="0, 12" />
+            </Style>
+
+            <Style x:Key="HeaderLabelStyle"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily"
+                    Value="{StaticResource MontserratRegular}" />
+                <Setter Property="FontSize"
+                    Value="{StaticResource LittleSize}" />
+                <Setter Property="TextColor"
+                    Value="{StaticResource GreenColor}" />
+                <Setter Property="HorizontalOptions"
+                    Value="Start" />
             </Style>
         </ResourceDictionary>
     </ContentPage.Resources>
@@ -89,7 +105,38 @@
               Grid.Row="1"
               Text="ARE YOU REGISTERED?"
               Style="{StaticResource TitleLabelStyle}"/>
+            <!-- LOGIN FORM -->
+            <StackLayout   
+                Grid.Row="2"
+                Margin="24">
+                <Label
+                  Text="User name or email"
+                  Style="{StaticResource HeaderLabelStyle}" />
+                <Entry Text="{Binding UserName.Value, Mode=TwoWay}">
+					<Entry.Style>
+                        <OnPlatform x:TypeArguments="Style">
+                            <On Platform="iOS, Android" Value="{StaticResource EntryStyle}" />
+                            <On Platform="UWP, WinRT, WinPhone" Value="{StaticResource UwpEntryStyle}" />
+                        </OnPlatform>
+                    </Entry.Style>
+                    <Entry.Behaviors>
+						<behaviors:EventToCommandBehavior
+							EventName="TextChanged"
+							Command="{Binding ValidateUserNameCommand}" />
+					</Entry.Behaviors>
+					<Entry.Triggers>
+						<DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding UserName.IsValid}"
+							Value="False">
+							<Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+						</DataTrigger>
+					</Entry.Triggers>
+                </Entry>
+                <Label 
+					Text="{Binding UserName.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					Style="{StaticResource ValidationErrorLabelStyle}" />
+            </StackLayout>
         </Grid>
-
     </Grid>
 </ContentPage>

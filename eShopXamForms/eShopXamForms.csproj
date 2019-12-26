@@ -28,5 +28,6 @@
     <Folder Include="ViewModels\Base\" />
     <Folder Include="Services\Settings\" />
     <Folder Include="Services\Navigation\" />
+    <Folder Include="Behaviors\Base\" />
   </ItemGroup>
 </Project>

@@ -37,6 +37,8 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>fonts/Montserrat-Regular.ttf</string>
+		<string>fonts/Montserrat-Bold.ttf</string>
+		<string>fonts/SourceSansPro-Regular.ttf</string>
 	</array>
 </dict>
 </plist>
