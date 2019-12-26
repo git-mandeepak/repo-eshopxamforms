@@ -12,6 +12,9 @@ namespace eShopXamForms
     {
         ISettingsService _settingsService;
 
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         public App()
         {
             InitializeComponent();
