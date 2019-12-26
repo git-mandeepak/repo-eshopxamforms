@@ -18,6 +18,9 @@ namespace eShopXamForms
             InitApp();
         }
 
+        /// <summary>
+        /// App Initialize
+        /// </summary>
         private void InitApp()
         {
             _settingsService = ViewModelLocator.Resolve<ISettingsService>();
