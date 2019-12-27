@@ -41,6 +41,58 @@
                 <Setter Property="HorizontalOptions"
                     Value="Start" />
             </Style>
+
+            <Style x:Key="LoginButtonStyle"
+                TargetType="{x:Type Label}">
+                <Setter Property="FontFamily"
+                    Value="{StaticResource MontserratRegular}" />
+                <Setter Property="TextColor"
+                    Value="{StaticResource WhiteColor}" />
+                <Setter Property="HorizontalOptions"
+                    Value="Center" />
+                <Setter Property="VerticalOptions"
+                    Value="Center" />
+            </Style>
+
+            <Style x:Key="LoginPanelStyle"
+                TargetType="{x:Type Grid}">
+                <Setter Property="HeightRequest"
+                    Value="60" />
+                <Setter Property="BackgroundColor"
+                    Value="{StaticResource LightGreenColor}" />
+                <Setter Property="HorizontalOptions"
+                    Value="FillAndExpand" />
+                <Setter Property="VerticalOptions"
+                    Value="FillAndExpand" />
+            </Style>
+
+            <Style x:Key="RegisterPanelStyle"
+                TargetType="{x:Type Grid}"
+                BasedOn="{StaticResource LoginPanelStyle}">
+                <Setter Property="BackgroundColor"
+                    Value="{StaticResource GreenColor}" />
+            </Style>
+
+            <Style x:Key="SettingsPanelStyle"
+                TargetType="{x:Type Grid}"
+                BasedOn="{StaticResource LoginPanelStyle}">
+                <Setter Property="BackgroundColor"
+                    Value="{StaticResource BlackColor}" />
+            </Style>
+
+            <Style x:Key="SettingsImageStyle"
+                TargetType="{x:Type Image}">
+                <Setter Property="Margin"
+                    Value="12" />
+            </Style>
+            
+            <!--<animations:StoryBoard
+              x:Key="LoginAnimation"
+              Target="{x:Reference LoginPanel}">
+                <animations:FadeInAnimation
+                    Direction="Up"
+                    Duration="1500" />
+            </animations:StoryBoard>-->
         </ResourceDictionary>
     </ContentPage.Resources>
     <Grid
@@ -136,7 +188,52 @@
                 <Label 
 					Text="{Binding UserName.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
 					Style="{StaticResource ValidationErrorLabelStyle}" />
+                <Label
+                  Text="Password"
+                  Style="{StaticResource HeaderLabelStyle}"/>
+                <Entry
+                  IsPassword="True"
+                  Text="{Binding Password.Value, Mode=TwoWay}">
+                    <Entry.Style>
+                        <OnPlatform x:TypeArguments="Style">
+                            <On Platform="iOS, Android" Value="{StaticResource EntryStyle}" />
+                            <On Platform="UWP, WinRT, WinPhone" Value="{StaticResource UwpEntryStyle}" />
+                        </OnPlatform>
+                    </Entry.Style>
+					<Entry.Behaviors>
+						<behaviors:EventToCommandBehavior
+							EventName="TextChanged"
+							Command="{Binding ValidatePasswordCommand}" />
+					</Entry.Behaviors>
+					<Entry.Triggers>
+						<DataTrigger 
+							TargetType="Entry"
+							Binding="{Binding Password.IsValid}"
+							Value="False">
+							<Setter Property="behaviors:LineColorBehavior.LineColor" Value="{StaticResource ErrorColor}" />
+						</DataTrigger>
+					</Entry.Triggers>
+                </Entry>
+				<Label 
+					Text="{Binding Password.Errors, Converter={StaticResource FirstValidationErrorConverter}}"
+					Style="{StaticResource ValidationErrorLabelStyle}" />
             </StackLayout>
+            <!-- LOGIN BUTTON -->
+            <Grid
+                BackgroundColor="{StaticResource LightGreenColor}"
+                Grid.Row="3"
+                Padding="0"
+                ColumnSpacing="0"
+                RowSpacing="0">
+                <Label
+                  Text="[ LOGIN ]"
+                  Style="{StaticResource LoginButtonStyle}"/>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer
+                        Command="{Binding MockSignInCommand}"
+                        NumberOfTapsRequired="1" />
+                </Grid.GestureRecognizers>
+            </Grid>
         </Grid>
     </Grid>
 </ContentPage>
